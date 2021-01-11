@@ -1,0 +1,29 @@
+{
+  "name": "Move Cookies",
+  "version": "0.1.0",
+  "description": "Copy and paste cookies easily",
+  "permissions": [
+    "cookies",
+    "<all_urls>",
+    "activeTab",
+    "storage"
+  ],
+  "browser_action": {
+    "default_title": "Copy/Paste Cookies",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/cookie_jar_16.png",
+      "32": "images/cookie_jar_32.png",
+      "48": "images/cookie_jar_48.png",
+      "128": "images/cookie_jar_128.png"
+    }
+  },
+  "icons": {
+    "16": "images/cookie_jar_16.png",
+    "32": "images/cookie_jar_32.png",
+    "48": "images/cookie_jar_48.png",
+    "128": "images/cookie_jar_128.png"
+  },
+  "incognito": "split",
+  "manifest_version": 2
+}
