@@ -1,10 +1,12 @@
+![Move Cookies Icon](./images/cookie_jar_128.png)
+
 # Move Cookies
 
 Move Cookies is a Chrome Extension made to copy/paste cookies between hosts. Move Cookies made use of the local storage to transport the cookies making no neccessary the use of the clipboard, however when the action *Copy* is permormed Move Cookies will copy the cookies to the clipboard also.
 
 ## Install
 
-To be defined
+Go to [Move Cookies](https://chrome.google.com/webstore/detail/move-cookies/kffiikcfaacjjpmcalnafccbfebhlhkd?hl=en-GB) in the Google Web Store and press "Add to Chrome".
 
 ## Credits
 
