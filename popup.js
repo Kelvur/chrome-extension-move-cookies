@@ -55,7 +55,7 @@ pasteButton.onclick = async () => {
   const tab = await getSelectedTab()
   const url = new URL(tab.url)
   const cookiesAsString = await readFromLocalStorage(COOKIES_KEY)
-  JSON.parse(cookiesAsString).forEach(({ hostOnly, session, secure, storeId, ...restCookie}) => {
+  JSON.parse(cookiesAsString).forEach(({ hostOnly, session, storeId, ...restCookie}) => {
     setCookie({...restCookie, url: url.origin, domain: url.hostname})
   })
 }
