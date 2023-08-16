@@ -2,7 +2,7 @@
 
 # Move Cookies
 
-Move Cookies is a Chrome Extension made to copy/paste cookies between hosts. Move Cookies made use of the local storage to transport the cookies making no neccessary the use of the clipboard, however when the action *Copy* is permormed Move Cookies will copy the cookies to the clipboard also.
+Move Cookies is a Chrome Extension made to copy/paste cookies between hosts. Move Cookies made use of the local storage to transport the cookies making no necessary the use of the clipboard, however when the action *Copy* is performed Move Cookies will copy the cookies to the clipboard also.
 
 ## Install
 
