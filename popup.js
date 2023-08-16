@@ -30,7 +30,7 @@ async function writeToClipboard(value){
 const copyButton = document.getElementById('copyButton')
 
 copyButton.onclick = async () => {
-  const tab = await getSelectedTab()
+  const tab = await getActiveTab()
   const url = new URL(tab.url)
   const cookies = await getCookies(url.hostname)
 
@@ -43,11 +43,31 @@ copyButton.onclick = async () => {
 const pasteButton = document.getElementById('pasteButton')
 
 pasteButton.onclick = async () => {
-  const tab = await getSelectedTab()
+  const tab = await getActiveTab()
   const url = new URL(tab.url)
   const cookiesAsString = await readFromLocalStorage(LOCAL_STORAGE_KEY)
 
-  JSON.parse(cookiesAsString).forEach(({ hostOnly, session, storeId, ...restCookie}) => {
-    setCookie({...restCookie, url: url.origin, domain: url.hostname})
+  if(!cookiesAsString || cookiesAsString === 'undefined') {
+    return
+  }
+
+  JSON.parse(cookiesAsString).forEach(async ({
+    // hostOnly, session are removed as they are not accepted parameters by chrome.cookies.set
+    hostOnly,
+    session,
+    // storeId it is removed as the origin tab and the actual tab can be different
+    storeId,
+    name,
+    ...restCookie
+  }) => {
+    const cookieHasSecurePrefixes = /^__(Host|Secure)/.test(name)
+    const cookieParams = {
+      ...restCookie,
+      name: cookieHasSecurePrefixes ? name.replace(/^__/, '_'): name,
+      url: url.origin,
+      domain: name.startsWith('__Host-') ? undefined : url.hostname,
+    }
+    
+    await setCookie(cookieParams)
   })
 }
