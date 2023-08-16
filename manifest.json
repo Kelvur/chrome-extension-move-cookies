@@ -1,14 +1,16 @@
 {
   "name": "Move Cookies",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "Copy and paste cookies easily",
   "permissions": [
     "cookies",
-    "<all_urls>",
     "activeTab",
     "storage"
   ],
-  "browser_action": {
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
     "default_title": "Copy/Paste Cookies",
     "default_popup": "popup.html",
     "default_icon": {
@@ -25,5 +27,5 @@
     "128": "images/cookie_jar_128.png"
   },
   "incognito": "split",
-  "manifest_version": 2
+  "manifest_version": 3
 }
