@@ -26,6 +26,51 @@ async function writeToClipboard(value){
   return navigator.clipboard.writeText(value)
 }
 
+class AlertController {
+
+  constructor(){
+    this.ID_CONTAINER = 'alerts'
+    this.timeouts = []
+  }
+
+  _buildAlert({message, type}){
+    const alert = document.createElement('div')
+    alert.classList = `alert-item ${type}`
+    const alertMessage = document.createElement('p')
+    alertMessage.innerHTML = message
+
+    alert.appendChild(alertMessage)
+    return alert
+  }
+
+  publishAlert({
+    message = '',
+    timeoutInMilliseconds = 5000,
+    type = 'warning',
+  }){
+    const alertAsElement = this._buildAlert({ message, type })
+    const container = document.getElementById(this.ID_CONTAINER)
+
+    container.appendChild(alertAsElement)
+    if(this.timeouts.length === 0){
+      container.style.display = 'flex'
+    }
+
+    const idTimeout = setTimeout(() => {
+      container.removeChild(alertAsElement)
+
+      this.timeouts = this.timeouts.filter(val => val !== idTimeout)
+      if(this.timeouts.length === 0){
+        container.style.display = 'none'
+      }
+
+    }, timeoutInMilliseconds)
+    this.timeouts.push(idTimeout)
+  }
+
+}
+
+const alertController = new AlertController()
 
 const copyButton = document.getElementById('copyButton')
 
@@ -67,7 +112,11 @@ pasteButton.onclick = async () => {
       url: url.origin,
       domain: name.startsWith('__Host-') ? undefined : url.hostname,
     }
-    
+    if(cookieHasSecurePrefixes){
+      alertController.publishAlert({
+        message: `The cookie whose name is ${name} has to be stripped of the '_' on the start as cannot be created programmatically, edit the cookie manually`
+      })
+    }
     await setCookie(cookieParams)
   })
 }

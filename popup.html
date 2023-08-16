@@ -6,6 +6,24 @@
     body {
       display: flex;
       flex-flow: column;
+      gap: 8px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .alerts {
+      display: none;
+      flex-flow: column;
+      gap: 8px;
+    }
+    .alert-item {
+      align-items: center;
+      font-size: 14px;
+      margin: 0;
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+    .warning {
+      background-color: #fffbe6;
+      border: 1px solid #ffe58f;
     }
   </style>
 </head>
@@ -13,6 +31,7 @@
 <body>
   <button id="copyButton">Copy</button>
   <button id="pasteButton">Paste</button>
+  <p id="alerts" class="alerts"></p>
   <script src="popup.js"></script>
 </body>
 
