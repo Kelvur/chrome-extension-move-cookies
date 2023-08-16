@@ -1,38 +1,29 @@
 
 const COOKIES_KEY = 'cookies'
 
-function getSelectedTab(){
-  return new Promise(resolve => {
-    chrome.tabs.getSelected(tab => resolve(tab))
-  })
+async function getActiveTab(){
+  return (await chrome.tabs.query({active: true}))[0]
 }
 
-function getCookies(domain){
-  return new Promise(resolve => {
-    chrome.cookies.getAll({ domain }, cookies => resolve(cookies))
-  })
+async function getCookies(domain){
+  return chrome.cookies.getAll({ domain })
 }
 
-function setCookie(cookie){
-  return new Promise((resolve, reject) => {
-    chrome.cookies.set(cookie, cookie => {
-      cookie === null ? reject() : resolve(cookie)
-    })
-  })
+async function setCookie(cookie){
+  return chrome.cookies.set(cookie)
 }
 
-function writeToLocalStorage(key, value){
-  chrome.storage.local.set({ [key]: value})
+async function writeToLocalStorage(key, value){
+  return chrome.storage.local.set({ [key]: value})
 }
 
-function readFromLocalStorage(key){
-  return new Promise(resolve => {
-    chrome.storage.local.get(key, value => resolve(value[key]))
-  })
+async function readFromLocalStorage(key){
+  const value = await chrome.storage.local.get(key)
+  return value[key]
 }
 
-function writeToClipboard(value){
-  navigator.clipboard.writeText(value)
+async function writeToClipboard(value){
+  return navigator.clipboard.writeText(value)
 }
 
 
