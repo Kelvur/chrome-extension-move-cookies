@@ -1,5 +1,5 @@
 
-const COOKIES_KEY = 'cookies'
+const LOCAL_STORAGE_KEY = 'move_cookies'
 
 async function getActiveTab(){
   return (await chrome.tabs.query({active: true}))[0]
@@ -36,7 +36,7 @@ copyButton.onclick = async () => {
 
   const toBeCopied = JSON.stringify(cookies)
 
-  writeToLocalStorage(COOKIES_KEY, toBeCopied)
+  writeToLocalStorage(LOCAL_STORAGE_KEY, toBeCopied)
   writeToClipboard(toBeCopied)
 }
 
@@ -45,7 +45,8 @@ const pasteButton = document.getElementById('pasteButton')
 pasteButton.onclick = async () => {
   const tab = await getSelectedTab()
   const url = new URL(tab.url)
-  const cookiesAsString = await readFromLocalStorage(COOKIES_KEY)
+  const cookiesAsString = await readFromLocalStorage(LOCAL_STORAGE_KEY)
+
   JSON.parse(cookiesAsString).forEach(({ hostOnly, session, storeId, ...restCookie}) => {
     setCookie({...restCookie, url: url.origin, domain: url.hostname})
   })
