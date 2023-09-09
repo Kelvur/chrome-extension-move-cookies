@@ -106,13 +106,16 @@ pasteButton.onclick = async () => {
     ...restCookie
   }) => {
     const cookieHasSecurePrefixes = /^__(Host|Secure)/.test(name)
+    const canPastePrefixedCookie = url.protocol === 'https:'
+    const prefixedCookieHasToBeReplaced = cookieHasSecurePrefixes && !canPastePrefixedCookie
+
     const cookieParams = {
       ...restCookie,
-      name: cookieHasSecurePrefixes ? name.replace(/^__/, '_'): name,
+      name: prefixedCookieHasToBeReplaced ? name.replace(/^__/, '_'): name,
       url: url.origin,
       domain: name.startsWith('__Host-') ? undefined : url.hostname,
     }
-    if(cookieHasSecurePrefixes){
+    if(prefixedCookieHasToBeReplaced){
       alertController.publishAlert({
         message: `The cookie whose name is ${name} has to be stripped of the '_' on the start as cannot be created programmatically, edit the cookie manually`
       })
